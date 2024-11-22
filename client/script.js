@@ -1,5 +1,32 @@
 const API_URL = "/api/students";
 
+const form = document.getElementById("student-form");
+
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const newStudent = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        email: document.getElementById("email").value,
+        telephone: document.getElementById("telephone").value,
+        semester: document.getElementById("semester").value,
+        className: document.getElementById("className").value
+    }
+
+    await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newStudent)
+    })
+
+    form.reset();
+
+    fetchStudents();
+});
+
 async function fetchStudents() {
     const response = await fetch(API_URL);
     const students = await response.json();
